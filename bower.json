@@ -1,0 +1,25 @@
+{
+  "name": "admin",
+  "version": "0.0.0",
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "admin-lte#~2.3.0",
+    "satellizer": "~0.12.5",
+    "angular-ui-router": "~0.2.15",
+    "font-awesome": "fontawesome#~4.4.0",
+    "Ionicons": "ionicons#~2.0.1",
+    "restangular": "~1.5.1",
+    "lodash": "~3.10.1"
+  }
+}
