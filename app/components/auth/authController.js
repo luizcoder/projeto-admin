@@ -12,6 +12,9 @@
                 password: ctrl.password
             }
             
+            ctrl.loginError = false;                
+            ctrl.loginErrorText = '';
+
             //Realizando login do usuário
             $auth.login(credentials).then(function(data){
                 
