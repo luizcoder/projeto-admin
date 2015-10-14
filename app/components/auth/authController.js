@@ -11,10 +11,12 @@
                 email: ctrl.email,
                 password: ctrl.password
             }
-            
+
+            //Limpa qualquer alerta anterior ao login
             ctrl.loginError = false;                
             ctrl.loginErrorText = '';
-
+            $rootScope.warningText = false;
+            
             //Realizando login do usuário
             $auth.login(credentials).then(function(data){
                 
@@ -44,9 +46,22 @@
                 // Armazenando dados do usuário no rootscope para que
                 // possam ser acessados de qualquer lugar
                 $rootScope.currentUser = response.data.user;
-                
-                //Redirecionando usuário para a pagina principal
-                $state.go('admin.users', {});
+
+                //Verifica se o usuário foi desconectado 
+                // por ter sua sessão invalidada e redireciona
+                // para onde ele estava, após o login
+                if($rootScope.lastRoute){
+
+                    $state.go($rootScope.lastRoute.name, $rootScope.lastRoute.params);
+                    $rootScope.lastRoute = false;
+
+                }else{
+
+                   //Redirecionando usuário para a pagina principal
+                    $state.go('admin.users', {}); 
+
+                }
+
             });
         }
         

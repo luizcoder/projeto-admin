@@ -9,6 +9,11 @@
         </br>Usuário e/ou senha digitados são invalidos! Tente novamente.
     </div>
 
+    <!-- Global warning -->
+    <div class="alert alert-warning" ng-if="warningText">
+        {{warningText}}
+    </div>
+
     
   <p class="login-box-msg">Realize login para iniciar sua sessão</p>
   <form method="post">

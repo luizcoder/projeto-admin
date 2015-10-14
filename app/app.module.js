@@ -29,8 +29,7 @@
             
                 if(user){
                     
-                    $rootScope.authenticated = true;
-                    
+                    $rootScope.authenticated = true;                    
                     $rootScope.currentUser = user;
                     
                     // Se o usuário estiver for direcionado para o login
@@ -64,7 +63,7 @@
                     // Need to use $injector.get to bring in $state or else we get
                     // a circular dependency error
                     var $state = $injector.get('$state');
-
+                    var $rootScope = $injector.get('$rootScope');
                     // Instead of checking for a status code of 400 which might be used
                     // for other reasons in Laravel, we check for the specific rejection
                     // reasons to tell us if we need to redirect to the login state
@@ -76,11 +75,14 @@
 
                         if(rejection.data.error === value) {
 
+
                             // If we get a rejection corresponding to one of the reasons
                             // in our array, we know we need to authenticate the user so 
                             // we can remove the current user from local storage
                             localStorage.removeItem('user');
-
+                            $rootScope.authenticated = false;  
+                            $rootScope.warningText = "Sua sessão expirou! Realize login novamente.";    
+                            $rootScope.lastRoute = {name: $state.current.name, params: $state.current.params};
                             // Send the user to the auth state so they can login
                             $state.go('login');
                         }
