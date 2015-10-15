@@ -20,6 +20,7 @@
     "font-awesome": "fontawesome#~4.4.0",
     "Ionicons": "ionicons#~2.0.1",
     "restangular": "~1.5.1",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "angular-bootstrap": "~0.14.2"
   }
 }
