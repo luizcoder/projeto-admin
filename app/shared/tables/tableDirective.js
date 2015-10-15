@@ -2,8 +2,7 @@
 
 	var app = angular.module('app');
 
-	app.directive('pagination', function(){
-
+	app.directive('appPagination', function(){
 		return {
 			restrict: 'E',
 			templateUrl: 'app/shared/tables/pagination.html'
