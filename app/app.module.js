@@ -1,6 +1,6 @@
 (function(){
     
-    var app = angular.module('app',['menu','ui.router','auth','user','satellizer']);
+    var app = angular.module('app',['menu','ui.router','auth','user','satellizer','ui.bootstrap']);
     
     app.controller('AppController',['$rootScope',function($rootScope){        
 

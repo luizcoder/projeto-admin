@@ -64,7 +64,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="registro in table.data">
+              <tr ng-repeat="registro in table.data" ng-click="visualizar(registro)">
                 <td>{{registro.id}}</td>
                 <td>{{registro.name}}</td>
                 <td>{{registro.email}}</td>
@@ -78,5 +78,5 @@
     </div><!-- /.col -->
   </div><!-- /.row -->
   <!-- diretiva de paginação -->
-  <pagination></pagination>  
+  <app-pagination></app-pagination>  
 </section><!-- /.content -->

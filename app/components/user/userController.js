@@ -1,6 +1,7 @@
 (function(){
     var app = angular.module('user', []);
-    app.controller("UserController", ["$scope","$http",'$rootScope', function($scope,$http,$rootScope){
+
+    app.controller("UserController", ["$scope","$http",'$rootScope','$uibModal', function($scope,$http,$rootScope, $uibModal){
 
         $scope.getUsers = function(){
 
@@ -23,6 +24,10 @@
 
         }
 
+
+        /**
+         * Controles de paginação
+         */
         $scope.proxima = function(){
 
             if($scope.table.current_page + 1 <= $scope.table.last_page){
@@ -51,7 +56,44 @@
             $scope.getUsers();
             
         }
+
+
+
+
+        /**
+         * Modais para manipulação do registro
+         */
+        $scope.visualizar = function (registro) {
+
+            $scope.usuario = registro;
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/components/user/userForm.html',
+                controller:"UserModalController",
+                size: 600,
+                resolve: {
+                registro: function () {
+                    return $scope.usuario;
+                    }
+                }
+            });
+        };
+
+
         
+    }]);
+
+    app.controller('UserModalController', ['$modalInstance','$scope', 'registro', function($modalInstance,$scope,registro){
+
+        $scope.usuario = registro;
+
+        $scope.fechar = function(){
+            $modalInstance.dismiss('cancel');
+        }
+        $scope.salvar = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
     }]);
     
     
