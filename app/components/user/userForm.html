@@ -15,7 +15,7 @@
     <!-- Email do usuário-->
     <div class="form-group">
       <label>E-mail</label>
-      <input type="text" class="form-control" ng-model="usuario.email" placeholder="Enter ..." disabled>
+      <input type="text" class="form-control" ng-model="usuario.email" placeholder="Enter ...">
     </div>
 
     <!-- Status do registro-->
@@ -99,10 +99,11 @@
         </div>                        
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-        
+
   </form>
 
 </div>
 <div class="modal-footer text-right">
-  <button type="button" class="btn btn-default" ng-click="fechar()">Fechar</button>
+  <button type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
+  <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
 </div>

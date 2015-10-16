@@ -35,7 +35,7 @@
             }
 
         }
-        
+
         $scope.anterior = function(){
 
             if($scope.table.current_page - 1 > 1 ){
@@ -64,6 +64,43 @@
          */
         $scope.acoes = function (registro) {
 
+
+            $scope.usuario = registro;
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/components/user/userAction.html',
+                controller:"UserActionModalController",
+                windowTopClass:"modal-action",
+                size: 'sm',
+                resolve: {
+                    registro: function(){
+                        return $scope.usuario;
+                        },
+                }
+            });
+        };
+        
+    }]);
+
+
+    app.controller('UserActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
+
+
+        $scope.visualizar = function(){
+            $scope.mostrarForm(registro);
+        }
+
+        $scope.alterar = function(){
+            $scope.mostrarForm(registro);
+        }
+
+
+        $scope.fechar = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.mostrarForm = function (registro) {
             $scope.usuario = registro;
 
             var modalInstance = $uibModal.open({
@@ -115,15 +152,43 @@
     }]);  
 
 
-    app.controller('UserModalController', ['$modalInstance','$scope', 'registro', function($modalInstance,$scope,registro){
+    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http', function($modalInstance,$scope,registro,$rootScope,$http){
 
-        $scope.usuario = registro;
+        //Copiando o registro para edição
+        $scope.usuario = angular.copy(registro);
+
 
         $scope.fechar = function(){
             $modalInstance.dismiss('cancel');
         }
-        $scope.salvar = function(){
+
+        $scope.cancelar = function(){
+            $scope.usuario = $scope.usuario_old;
             $modalInstance.dismiss('cancel');
+        }
+
+        /*
+         * Salvando alterações no registro
+         */
+        $scope.salvar = function(){
+
+            var data = $scope.usuario;
+            $http.put($rootScope.apiUrl+'/api/user/' + data.id, data).success(function(data){
+                
+                //retornando o registro já alterado
+                $scope.usuario = data;
+
+                //Atualizando o registro na listagem 
+                for(var key in $scope.usuario) {
+                    registro[key] = $scope.usuario[key];
+                }
+
+ 
+
+            }).error(function(error){
+                $scope.error = error;
+            });  
+
         }
 
     }]);
