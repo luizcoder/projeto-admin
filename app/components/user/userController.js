@@ -21,7 +21,6 @@
                 
                 $scope.error = error;
             });  
-
         }
 
 
@@ -36,6 +35,7 @@
             }
 
         }
+        
         $scope.anterior = function(){
 
             if($scope.table.current_page - 1 > 1 ){
@@ -43,7 +43,8 @@
                 $scope.getUsers();
             }
 
-        }        
+        }   
+
         $scope.pagina = function(page){
 
             $scope.table.current_page = page;
@@ -58,19 +59,51 @@
         }
 
 
-
-
         /**
-         * Modais para manipulação do registro
+         * Ações do registro
          */
-        $scope.visualizar = function (registro) {
+        $scope.acoes = function (registro) {
 
+            $scope.usuario = registro;
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/components/user/userAction.html',
+                controller:"UserActionModalController",
+                windowTopClass:"modal-action",
+                size: 'sm',
+                resolve: {
+                    registro: function(){
+                        return $scope.usuario;
+                        },
+                }
+            });
+        };
+        
+    }]);
+
+
+    app.controller('UserActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
+
+
+        $scope.visualizar = function(){
+            $scope.mostrarForm(registro);
+        }
+
+        $scope.alterar = function(){
+            $scope.mostrarForm(registro);
+        }
+
+        $scope.fechar = function(){
+            $modalInstance.dismiss('cancel');
+        }
+
+        $scope.mostrarForm = function (registro) {
             $scope.usuario = registro;
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/components/user/userForm.html',
                 controller:"UserModalController",
-                size: 600,
                 resolve: {
                 registro: function () {
                     return $scope.usuario;
@@ -79,9 +112,8 @@
             });
         };
 
+    }]);  
 
-        
-    }]);
 
     app.controller('UserModalController', ['$modalInstance','$scope', 'registro', function($modalInstance,$scope,registro){
 
@@ -95,6 +127,5 @@
         }
 
     }]);
-    
     
 })();
