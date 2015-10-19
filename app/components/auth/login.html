@@ -16,7 +16,7 @@
 
 
   <p class="login-box-msg">Realize login para iniciar sua sessão</p>
-  <form method="post">
+  <form method="post" ng-keydown="$event.which === 13 && auth.login()">
     <div class="form-group has-feedback">
       <input name="email" type="email" ng-model="auth.email" class="form-control" placeholder="Email">
       <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
