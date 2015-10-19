@@ -1,7 +1,7 @@
 (function(){
     var app = angular.module('user', []);
 
-    app.controller("UserController", ["$scope","$http",'$rootScope','$uibModal', function($scope,$http,$rootScope, $uibModal){
+    app.controller("UserController", ["$scope","$http",'$rootScope','$uibModal','AlertService', function($scope,$http,$rootScope, $uibModal,AlertService){
 
         $scope.getUsers = function(){
             var data = {page: 1, per_page: 10,search: null};
@@ -13,15 +13,11 @@
                 data.per_page = $scope.per_page;
             }
             $http.get($rootScope.apiUrl+'/api/user', {params: data}).success(function(data){
-
                 $scope.table = data;
-
             }).error(function(error){
-
-                $scope.error = error;
+                AlertService.error(error);
             });
         }
-
 
         /**
          * Controles de paginação
@@ -86,6 +82,7 @@
         }
 
         $scope.mostrarForm = function (registro) {
+            $modalInstance.dismiss('cancel');
             var modalInstance = $uibModal.open({
                 animation: true,
                 templateUrl: 'app/components/user/userForm.html',
@@ -101,7 +98,7 @@
     }]);
 
 
-    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http', function($modalInstance,$scope,registro,$rootScope,$http){
+    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,$rootScope,$http,AlertService){
 
         // Copiando o registro para edição
         $scope.registro = angular.copy(registro);
@@ -110,8 +107,31 @@
             $modalInstance.dismiss('cancel');
         }
 
-        $scope.cancelar = function(){
-            $modalInstance.dismiss('cancel');
+        $scope.excluir = function(){
+
+            confirm = AlertService.confirmRemove('Excluír','Deseja excluír este usuário?');
+            confirm.then(function(op){
+
+                var data = $scope.registro;
+                $scope.formXhr = true;
+
+                // Enviando requisição de exclusão
+                $http.delete($rootScope.apiUrl+'/api/user/' + data.id).success(function(data){
+
+                    if(data.deleted){
+                        registro.excluido = true;
+                        AlertService.success('Usuário removido com sucesso!');
+                        $modalInstance.dismiss('cancel');
+                    }else{
+                        AlertService.error('Erro ao remover usuário!');
+                    }
+                    $scope.formXhr = false;
+
+                }).error(function(error){
+                    AlertService.error(error);
+                    $scope.formXhr = false;
+                });
+            });
         }
 
         /*
@@ -119,22 +139,28 @@
          */
         $scope.salvar = function(){
             var data = $scope.registro;
+            $scope.formXhr = true;
+
+            // Enviando requisição de alteração
             $http.put($rootScope.apiUrl+'/api/user/' + data.id, data).success(function(data){
 
-                // Retornando o registro já alterado
+                // Retornando o registro após a alteração
                 $scope.registro = data;
 
-                // Atualizando o registro na listagem
+                // Atualizando o registro na lista
                 for(var key in $scope.registro) {
                     registro[key] = $scope.registro[key];
                 }
 
+                $scope.formXhr = false;
+                AlertService.success('Usuário alterado com sucesso!');
+                $modalInstance.dismiss('cancel');
+
             }).error(function(error){
-                $scope.error = error;
+                AlertService.error(error);
+                $scope.formXhr = false;
             });
-
         }
-
     }]);
 
 })();

@@ -7,14 +7,13 @@
   </h1>
   <ol class="breadcrumb">
     <li><a href="#"><i class="fa fa-dashboard"></i> Administrador </a></li>
-    <li class="active">Usuários</li>    
+    <li class="active">Usuários</li>
   </ol>
 </section>
-    
+
 <!-- Main content -->
 <section class="content">
 
- 
   <div class="row">
     <div class="col-xs-12">
       <div class="box">
@@ -27,14 +26,14 @@
             <div class="col-sm-6 col-xs-12">
                 <div class="dataTables_length">
                     <label>
-                      Exibir 
+                      Exibir
                       <select ng-change="pagina(1)" class="form-control input-sm" ng-model="per_page">
                         <option ng-selected="10">10</option>
                         <option>25</option>
                         <option>100</option>
                         <option>450</option>
-                      </select> 
-                      registros 
+                      </select>
+                      registros
                     </label>
                 </div>
             </div>
@@ -42,9 +41,9 @@
                 <div class="dataTables_filter">
                     <label>
                       Buscar:
-                      <input  ng-keydown="$event.which === 13 && doSearch()" 
-                              ng-model="search" 
-                              class="form-control input-sm" 
+                      <input  ng-keydown="$event.which === 13 && doSearch()"
+                              ng-model="search"
+                              class="form-control input-sm"
                               placeholder="" t
                               ype="search" >
                     </label>
@@ -65,7 +64,8 @@
               </thead>
               <tbody>
                 <tr ng-repeat="registro in table.data"
-                    ng-click="acoes(registro)">
+                    ng-click="acoes(registro)"
+                    ng-hide="registro.excluido">
 
                   <td>{{registro.id}}</td>
                   <td>{{registro.name}}</td>
@@ -81,5 +81,5 @@
     </div><!-- /.col -->
   </div><!-- /.row -->
   <!-- diretiva de paginação -->
-  <app-pagination></app-pagination>  
+  <app-pagination></app-pagination>
 </section><!-- /.content -->

@@ -1,13 +1,41 @@
+/*
+ * Formatação da navbar
+ */
 .navbar-nav>.user-menu>.dropdown-menu>li.user-header {
     height: 85px;
     padding: 10px;
     text-align: center;
 }
 
+/*
+ * Alteração dos valores padrões dos modais
+ */
 .modal-action .modal-content {
     margin-top: 70%;
 }
 
+/*
+ * Alteração dos valores padrões do loading-bar
+ */
+#loading-bar .bar {
+    background: #FF0606;
+    height: 3px;
+}
+#loading-bar-spinner .spinner-icon {
+    border-top-color: #FF0606;
+    border-left-color: #FF0606;
+    width: 20px;
+    height: 20px;
+}
+
+/*
+ * Exibição de tabelas e registros
+ */
+
+ .table .excluido,  .table .excluido:hover{
+     background-color: #C5C4C4;
+     opacity: 0.4;
+ }
 
 @media screen and (max-width: 767px){
 	div.dataTables_length, div.dataTables_filter{

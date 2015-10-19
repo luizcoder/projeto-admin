@@ -5,6 +5,8 @@
 </div>
 <div class="modal-body">
 
+  <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
+
   <form role="form">
     <!-- Nome do usuário-->
     <div class="form-group">
@@ -95,15 +97,16 @@
           <label> Deseja excluír este usuário? </label>
         </div>
         <div class="btn-group clear" role="group" aria-label="...">
-          <button type="button" class="btn btn-danger"  ng-disabled="registro.readOnly">Excluir usuário</button>
+          <button type="button" class="btn btn-danger" ng-click="excluir()"  ng-disabled="registro.readOnly">Excluir usuário</button>
         </div>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-
   </form>
 
 </div>
 <div class="modal-footer text-right">
-  <button type="button" class="btn btn-success" ng-click="salvar()"  ng-disabled="registro.readOnly">Salvar Alterações</button>
-  <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
+  <button ng-if="formXhr" ng-disabled="true" type="button" class="btn btn-success" ><i class="fa fa-spinner"></i> Salvando</button>
+  <button ng-if="!formXhr" ng-disabled="formXhr" type="button" class="btn btn-success" ng-click="salvar()"  ng-disabled="registro.readOnly">Salvar Alterações</button>
+
+  <button type="button" class="btn btn-default" ng-click="fechar()"  >Fechar</button>
 </div>

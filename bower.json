@@ -21,6 +21,15 @@
     "Ionicons": "ionicons#~2.0.1",
     "restangular": "~1.5.1",
     "lodash": "~3.10.1",
+    "angular-bootstrap": "~0.14.2",
+    "angular-loading-bar": "~0.8.0",
+    "toastr": "~2.1.2",
+    "angular-dialog-service": "~5.2.8",
+    "angular-sanitize": "~1.4.7",
+    "angular-translate": "~2.8.1"
+  },
+  "resolutions": {
+    "angular": "1.4.7",
     "angular-bootstrap": "~0.14.2"
   }
 }
