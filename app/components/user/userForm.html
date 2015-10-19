@@ -8,20 +8,20 @@
   <form role="form">
     <!-- Nome do usuário-->
     <div class="form-group">
-      <label>Nome</label>
-      <input type="text" class="form-control" ng-model="usuario.name" placeholder="Enter ...">
+      <label>Nome {{registro.readOnly}}</label>
+      <input type="text" class="form-control" ng-model="registro.name" ng-readonly="registro.readOnly" placeholder="Enter ...">
     </div>
 
     <!-- Email do usuário-->
     <div class="form-group">
       <label>E-mail</label>
-      <input type="text" class="form-control" ng-model="usuario.email" placeholder="Enter ...">
+      <input type="text" class="form-control" ng-model="registro.email" ng-readonly="registro.readOnly" placeholder="Enter ...">
     </div>
 
     <!-- Status do registro-->
     <div class="form-group">
       <label>Status</label>
-      <select class="form-control">
+      <select class="form-control" ng-readonly="registro.readOnly">
         <option>Ativo</option>
         <option>Inativo</option>
       </select>
@@ -33,25 +33,25 @@
         <h3 class="box-title">Perfis</h3>
       </div><!-- /.box-header -->
       <div class="box-body">
-       
+
         <div class="form-group">
           <div class="checkbox">
             <label>
-              <input type="checkbox">
+              <input type="checkbox"  ng-disabled="registro.readOnly">
               Administrador
             </label>
           </div>
 
           <div class="checkbox">
             <label>
-              <input type="checkbox">
+              <input type="checkbox"  ng-disabled="registro.readOnly">
               Formando
             </label>
           </div>
 
           <div class="checkbox">
             <label>
-              <input type="checkbox" disabled>
+              <input type="checkbox" ng-disabled="registro.readOnly">
               Membro de comissão
             </label>
           </div>
@@ -69,18 +69,18 @@
 
         <div class="form-group">
           <label>Senha</label>
-          <input type="password" class="form-control" ng-model="usuario.password">
+          <input type="password" class="form-control" ng-model="registro.password"  ng-readonly="registro.readOnly">
         </div>
 
         <div class="form-group">
           <label>Confirmação de senha</label>
-          <input type="password" class="form-control" ng-model="usuario.password_confirmation">
-        </div> 
+          <input type="password" class="form-control" ng-model="registro.password_confirmation"  ng-readonly="registro.readOnly">
+        </div>
 
 
         <div class="form-group">
-          <button type="button" class="btn btn-warning" ng-click="salvar()">Resetar senha</button>
-        </div>                        
+          <button type="button" class="btn btn-warning" ng-click="salvar()"  ng-disabled="registro.readOnly">Resetar senha</button>
+        </div>
 
       </div><!-- /.box-body -->
     </div><!-- /.box -->
@@ -92,11 +92,11 @@
       </div><!-- /.box-header -->
       <div class="box-body">
         <div class="form-group" role="group" aria-label="...">
-          <label> Deseja excluír este usuário? </label> 
-        </div>  
+          <label> Deseja excluír este usuário? </label>
+        </div>
         <div class="btn-group clear" role="group" aria-label="...">
-          <button type="button" class="btn btn-danger ">Excluir usuário</button>                        
-        </div>                        
+          <button type="button" class="btn btn-danger"  ng-disabled="registro.readOnly">Excluir usuário</button>
+        </div>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
 
@@ -104,6 +104,6 @@
 
 </div>
 <div class="modal-footer text-right">
-  <button type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
+  <button type="button" class="btn btn-success" ng-click="salvar()"  ng-disabled="registro.readOnly">Salvar Alterações</button>
   <button type="button" class="btn btn-default" ng-click="cancelar()">Cancelar</button>
 </div>
