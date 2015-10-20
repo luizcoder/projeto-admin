@@ -5,7 +5,7 @@
      */
     var apiUrl = "http://api.sample";
 
-    var app = angular.module('app',['menu','ui.router','auth','user','satellizer','ui.bootstrap','angular-loading-bar','dialogs.main']);
+    var app = angular.module('app',['menu','ui.router','auth','user','satellizer','ui.bootstrap','angular-loading-bar','dialogs.main','validation.match']);
     app.controller('AppController',['$rootScope',function($rootScope){
 
         // Metodo para avaliar se o link está ativo

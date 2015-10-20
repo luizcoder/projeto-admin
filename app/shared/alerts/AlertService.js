@@ -27,8 +27,18 @@
             success: function(msg){
                 toastr.success(msg);
             },
+            // Pode receber string ou array
             error: function(msg){
-                toastr.success(msg);
+                // Tratando erros do Laravel Validator
+                if(typeof msg === 'string'){
+                    toastr.error(msg);
+                }else{
+                    error = "";
+                    angular.forEach(msg, function(value, key){
+                            error += value + "\n";
+                    });
+                    toastr.error(error);
+                }
             },
             confirmRemove: function(title,msg){
                 return dialogs.confirm(title,msg).result;

@@ -7,7 +7,7 @@
 
   <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
 
-  <form role="form">
+  <form role="form" name="usuarioForm">
     <!-- Nome do usuário-->
     <div class="form-group">
       <label>Nome {{registro.readOnly}}</label>
@@ -60,53 +60,51 @@
         </div>
       </div><!-- /.box-body -->
     </div><!-- /.box -->
-
-    <!-- Resetar senha -->
-    <div class="box box-warning">
+ </form>
+ <!-- Resetar senha -->
+ <form name="userPasswordForm">
+    <div  class="box box-warning">
       <div class="box-header with-border">
         <h3 class="box-title">Resetar senha</h3>
       </div><!-- /.box-header -->
       <div class="box-body">
 
-
         <div class="form-group">
-          <label>Senha</label>
-          <input type="password" class="form-control" ng-model="registro.password"  ng-readonly="registro.readOnly">
+          <label>Senha </label>
+          <input type="password" autocomplete="off" name="password" ng-minlength="6" required class="form-control" ng-model="registro.password"  ng-readonly="registro.readOnly" >
         </div>
 
         <div class="form-group">
           <label>Confirmação de senha</label>
-          <input type="password" class="form-control" ng-model="registro.password_confirmation"  ng-readonly="registro.readOnly">
+          <input type="password" autocomplete="off" name="password_confirmation" ng-minlength="6" required  class="form-control" ng-model="registro.password_confirmation"  ng-readonly="registro.readOnly" match="registro.password" >
         </div>
-
+        <div  ng-show="userPasswordForm.$invalid">
+            <p class="text-danger" ng-show="userPasswordForm.password_confirmation.$error.match">A senha não confere!</p>
+            <p class="text-danger" ng-show="userPasswordForm.password.$error.minlength">Sua senha deve conter no mínimo 6 caracteres!</p>
+        </div>
 
         <div class="form-group">
-          <button type="button" class="btn btn-warning" ng-click="salvar()"  ng-disabled="registro.readOnly">Resetar senha</button>
+            <button ng-disabled="xhr || userPasswordForm.$invalid" type="button" class="btn btn-warning" ng-click="salvarSenha()"> Salvar nova senha</button>
         </div>
 
       </div><!-- /.box-body -->
-    </div><!-- /.box -->
-
-
-    <div class="box box-danger">
-      <div class="box-header with-border">
-        <h3 class="box-title">Cuidado</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-        <div class="form-group" role="group" aria-label="...">
-          <label> Deseja excluír este usuário? </label>
-        </div>
-        <div class="btn-group clear" role="group" aria-label="...">
-          <button type="button" class="btn btn-danger" ng-click="excluir()"  ng-disabled="registro.readOnly">Excluir usuário</button>
-        </div>
-      </div><!-- /.box-body -->
-    </div><!-- /.box -->
-  </form>
-
-</div>
+  </div><!-- /.box -->
+ </form><!-- /.form -->
+ <div class="box box-danger">
+  <div class="box-header with-border">
+    <h3 class="box-title">Cuidado</h3>
+  </div><!-- /.box-header -->
+  <div class="box-body">
+    <div class="form-group" role="group" aria-label="...">
+      <label> Deseja excluír este usuário? </label>
+    </div>
+    <div class="btn-group clear" role="group" aria-label="...">
+      <button type="button" class="btn btn-danger" ng-click="excluir()"  ng-disabled="registro.readOnly">Excluir usuário</button>
+    </div>
+  </div><!-- /.box-body -->
+ </div><!-- /.box -->
+</div><!-- /.modal-body -->
 <div class="modal-footer text-right">
-  <button ng-if="formXhr" ng-disabled="true" type="button" class="btn btn-success" ><i class="fa fa-spinner"></i> Salvando</button>
-  <button ng-if="!formXhr" ng-disabled="formXhr" type="button" class="btn btn-success" ng-click="salvar()"  ng-disabled="registro.readOnly">Salvar Alterações</button>
-
+  <button ng-disabled="xhr || registro.readOnly" type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
   <button type="button" class="btn btn-default" ng-click="fechar()"  >Fechar</button>
 </div>

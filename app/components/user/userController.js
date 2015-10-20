@@ -100,7 +100,7 @@
 
     app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,$rootScope,$http,AlertService){
 
-        // Copiando o registro para edição
+        // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
 
         $scope.fechar = function(){
@@ -115,7 +115,7 @@
                 var data = $scope.registro;
                 $scope.formXhr = true;
 
-                // Enviando requisição de exclusão
+                // Enviar requisição de exclusão
                 $http.delete($rootScope.apiUrl+'/api/user/' + data.id).success(function(data){
 
                     if(data.deleted){
@@ -135,19 +135,19 @@
         }
 
         /*
-         * Salvando alterações no registro
+         * Salvar alterações no registro
          */
         $scope.salvar = function(){
             var data = $scope.registro;
             $scope.formXhr = true;
 
-            // Enviando requisição de alteração
+            // Enviar requisição de alteração
             $http.put($rootScope.apiUrl+'/api/user/' + data.id, data).success(function(data){
 
-                // Retornando o registro após a alteração
+                // Retornar o registro após a alteração
                 $scope.registro = data;
 
-                // Atualizando o registro na lista
+                // Atualizar o registro na lista
                 for(var key in $scope.registro) {
                     registro[key] = $scope.registro[key];
                 }
@@ -161,6 +161,27 @@
                 $scope.formXhr = false;
             });
         }
+
+        /*
+         * Salvar nova senha
+         */
+        $scope.salvarSenha = function(){
+            var data = $scope.registro;
+
+            // Enviar requisição de alteração
+            $http.post($rootScope.apiUrl+'/api/user/password/' + data.id, data).success(function(data){
+
+                if(data.updated){
+                    AlertService.success('Senha alterada com sucesso!');
+                }else{
+                    AlertService.error(data.errors);
+                }
+
+            }).error(function(error){
+                AlertService.error(error);
+            });
+        }
+
     }]);
 
 })();
