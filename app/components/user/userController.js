@@ -100,6 +100,14 @@
 
     app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,$rootScope,$http,AlertService){
 
+        // Lista de perfis
+        $scope.listaPerfis = [
+                {id:1, nome: 'Administrador'},
+                {id:2, nome: 'Consultor'},
+                {id:3, nome: 'Comissão'},
+                {id:4, nome: 'Formando'},
+
+        ];
         // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
 

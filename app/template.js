@@ -747,7 +747,7 @@ var _initTemplate = function(){
         });
       };
     }(jQuery));
-    
+
     (function ($) {
 
         $('input').iCheck({
@@ -755,7 +755,10 @@ var _initTemplate = function(){
               radioClass: 'iradio_square-blue',
               increaseArea: '20%' // optional
             });
-        
+
     }(jQuery));
-    
+    (function ($) {
+        $('.select2').select2();
+    }(jQuery));
+
 }

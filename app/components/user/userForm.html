@@ -10,7 +10,7 @@
   <form role="form" name="usuarioForm">
     <!-- Nome do usuário-->
     <div class="form-group">
-      <label>Nome {{registro.readOnly}}</label>
+      <label>Nome </label>
       <input type="text" class="form-control" ng-model="registro.name" ng-readonly="registro.readOnly" placeholder="Enter ...">
     </div>
 
@@ -28,38 +28,12 @@
         <option>Inativo</option>
       </select>
     </div>
-
-    <!-- Perfis -->
-    <div class="box box-default">
-      <div class="box-header with-border">
-        <h3 class="box-title">Perfis</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-
-        <div class="form-group">
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"  ng-disabled="registro.readOnly">
-              Administrador
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox"  ng-disabled="registro.readOnly">
-              Formando
-            </label>
-          </div>
-
-          <div class="checkbox">
-            <label>
-              <input type="checkbox" ng-disabled="registro.readOnly">
-              Membro de comissão
-            </label>
-          </div>
-        </div>
-      </div><!-- /.box-body -->
-    </div><!-- /.box -->
+    <div class="form-group">
+        <label>Perfis</label>
+        <select class="form-control select2" ng-model="registro.perfis" multiple="multiple" data-placeholder="Selecione ou mais perfis" style="width: 100%;">
+          <option ng-repeat="item in listaPerfis" value="{{item.id}}">{{item.nome}}</option>
+        </select>
+    </div>
  </form>
  <!-- Resetar senha -->
  <form name="userPasswordForm">
