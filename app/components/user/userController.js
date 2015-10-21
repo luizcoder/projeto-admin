@@ -19,6 +19,10 @@
             });
         }
 
+        $scope.$on('get:users', function(){
+            $scope.getUsers();
+        });
+
         /**
          * Controles de paginação
          */
@@ -61,7 +65,23 @@
                         },
                 }
             });
-        };
+        }
+
+        $scope.novo = function () {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/components/user/userForm.html',
+                controller:"UserModalController",
+                resolve: {
+                    registro: function () {
+                        return {};
+                    },
+                    novo: function(){
+                        return true;
+                    }
+                }
+            });
+        }
 
     }]);
 
@@ -91,14 +111,17 @@
                     registro: function () {
                         return registro;
                     },
+                    novo: function(){
+                        return false;
+                    }
                 }
             });
-        };
+        }
 
     }]);
 
 
-    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,$rootScope,$http,AlertService){
+    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
 
         // Lista de perfis
         $scope.listaPerfis = [
@@ -106,10 +129,16 @@
                 {id:2, nome: 'Consultor'},
                 {id:3, nome: 'Comissão'},
                 {id:4, nome: 'Formando'},
+        ]
 
-        ];
         // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
+
+        // Flag de novo registro
+        $scope.novo = novo;
+        if($scope.novo){
+            $scope.registro = {username:''}
+        }
 
         $scope.fechar = function(){
             $modalInstance.dismiss('cancel');
@@ -127,7 +156,7 @@
                 $http.delete($rootScope.apiUrl+'/api/user/' + data.id).success(function(data){
 
                     if(data.deleted){
-                        registro.excluido = true;
+                        $rootScope.$broadcast('get:users');
                         AlertService.success('Usuário removido com sucesso!');
                         $modalInstance.dismiss('cancel');
                     }else{
@@ -152,24 +181,60 @@
             // Enviar requisição de alteração
             $http.put($rootScope.apiUrl+'/api/user/' + data.id, data).success(function(data){
 
-                // Retornar o registro após a alteração
-                $scope.registro = data;
+                if(data.updated){
+                    // Retornar o registro após a alteração
+                    $scope.registro = data.user;
 
-                // Atualizar o registro na lista
-                for(var key in $scope.registro) {
-                    registro[key] = $scope.registro[key];
+                    // Atualizar o registro na lista
+                    for(var key in $scope.registro) {
+                        registro[key] = $scope.registro[key];
+                    }
+
+                    $scope.formXhr = false;
+                    AlertService.success('Usuário alterado com sucesso!');
+                    $modalInstance.dismiss('cancel');
+                }else{
+                    AlertService.error(data.errors);
                 }
-
-                $scope.formXhr = false;
-                AlertService.success('Usuário alterado com sucesso!');
-                $modalInstance.dismiss('cancel');
-
             }).error(function(error){
                 AlertService.error(error);
                 $scope.formXhr = false;
             });
         }
 
+        /*
+         * Salvar novo registro
+         */
+        $scope.salvarNovo = function(){
+            var data = $scope.registro;
+            $scope.formXhr = true;
+
+            // Enviar requisição de alteração
+            $http.post($rootScope.apiUrl+'/api/user', data).success(function(data){
+
+                if(data.created){
+                    // Retornar o registro após a alteração
+                    $scope.registro = data.user;
+
+                    // Atualizar o registro na lista
+                    for(var key in $scope.registro) {
+                        registro[key] = $scope.registro[key];
+                    }
+
+                    $scope.formXhr = false;
+                    AlertService.success('Usuário cadastrado com sucesso!');
+                    $rootScope.$broadcast('get:users');
+                    $modalInstance.dismiss('cancel');
+                }else{
+                    AlertService.error(data.errors);
+                }
+
+
+            }).error(function(error){
+                AlertService.error(error);
+                $scope.formXhr = false;
+            });
+        }
         /*
          * Salvar nova senha
          */
@@ -190,6 +255,33 @@
             });
         }
 
+
+        /*
+         * checando se o usuário existe
+         */
+         $scope.wasChecked = false;
+         $scope.checkUnique = function(){
+
+             if($scope.registro.username && $scope.registro.username.length > 3){
+                $scope.usuarioForm.username.$loading = true;
+
+                var data = "";
+                if($scope.novo){
+                    data = $scope.registro.username
+                }else{
+                    data = $scope.registro.username + '/' + $scope.registro.id;
+                }
+                $http.get($rootScope.apiUrl + "/api/user/checkUnique/" + data ).success(function(data) {
+                    $scope.usuarioForm.username.$setValidity('unique', false);
+                    $scope.usuarioForm.username.$loading = false;
+
+                }).error(function(data){
+                    $scope.usuarioForm.username.$setValidity('unique', true);
+                    $scope.usuarioForm.username.$loading = false;
+                });
+                $scope.wasChecked = true;
+            }
+         }
     }]);
 
 })();

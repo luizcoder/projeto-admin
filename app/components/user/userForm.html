@@ -1,84 +1,126 @@
-
 <div class="modal-header">
-  <button type="button" class="close" ng-click="fechar()" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title">Usuário</h4>
+    <button type="button" class="close" ng-click="fechar()" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Usuário</h4>
 </div>
 <div class="modal-body">
 
-  <uib-alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</uib-alert>
-
-  <form role="form" name="usuarioForm">
-    <!-- Nome do usuário-->
-    <div class="form-group">
-      <label>Nome </label>
-      <input type="text" class="form-control" ng-model="registro.name" ng-readonly="registro.readOnly" placeholder="Enter ...">
-    </div>
-
-    <!-- Email do usuário-->
-    <div class="form-group">
-      <label>E-mail</label>
-      <input type="text" class="form-control" ng-model="registro.email" ng-readonly="registro.readOnly" placeholder="Enter ...">
-    </div>
-
-    <!-- Status do registro-->
-    <div class="form-group">
-      <label>Status</label>
-      <select class="form-control" ng-readonly="registro.readOnly">
-        <option>Ativo</option>
-        <option>Inativo</option>
-      </select>
-    </div>
-    <div class="form-group">
-        <label>Perfis</label>
-        <select class="form-control select2" ng-model="registro.perfis" multiple="multiple" data-placeholder="Selecione ou mais perfis" style="width: 100%;">
-          <option ng-repeat="item in listaPerfis" value="{{item.id}}">{{item.nome}}</option>
-        </select>
-    </div>
- </form>
- <!-- Resetar senha -->
- <form name="userPasswordForm">
-    <div  class="box box-warning">
-      <div class="box-header with-border">
-        <h3 class="box-title">Resetar senha</h3>
-      </div><!-- /.box-header -->
-      <div class="box-body">
-
+    <!-- Dados do usuário -->
+    <form role="form" name="usuarioForm">
+        <!-- Username do usuário-->
         <div class="form-group">
-          <label>Senha </label>
-          <input type="password" autocomplete="off" name="password" ng-minlength="6" required class="form-control" ng-model="registro.password"  ng-readonly="registro.readOnly" >
+            <label>Username </label>
+            <span ng-show="usuarioForm.username.$loading">
+                <i class="fa fa-spinner fa-spin"></i> Verificado username...
+            </span>
+            <span class="text-danger" ng-show="usuarioForm.username.$error.unique && !usuarioForm.username.$loading">
+                Este username já foi registrado!
+            </span>
+            <span class="text-success" ng-show="!usuarioForm.username.$error.unique && wasChecked  && !usuarioForm.username.$loading">
+                Este username esta disponível!
+            </span>
+            <input type="text" name="username" ng-minlength="4" required class="form-control" ng-model="registro.username" ng-change="checkUnique()" ng-model-options='{ debounce: 500 }' ng-readonly="registro.readOnly" placeholder="Digite o username">
+            <span class="text-danger" ng-show="usuarioForm.username.$error.minlength">O username deve conter no mínimo 4 caracteres!</span>
         </div>
 
+        <!-- Nome do usuário-->
         <div class="form-group">
-          <label>Confirmação de senha</label>
-          <input type="password" autocomplete="off" name="password_confirmation" ng-minlength="6" required  class="form-control" ng-model="registro.password_confirmation"  ng-readonly="registro.readOnly" match="registro.password" >
-        </div>
-        <div  ng-show="userPasswordForm.$invalid">
-            <p class="text-danger" ng-show="userPasswordForm.password_confirmation.$error.match">A senha não confere!</p>
-            <p class="text-danger" ng-show="userPasswordForm.password.$error.minlength">Sua senha deve conter no mínimo 6 caracteres!</p>
+            <label>Nome </label>
+            <input type="text" required class="form-control" ng-model="registro.name" ng-readonly="registro.readOnly" placeholder="Digite o nome">
         </div>
 
+        <!-- Email do usuário-->
         <div class="form-group">
-            <button ng-disabled="xhr || userPasswordForm.$invalid" type="button" class="btn btn-warning" ng-click="salvarSenha()"> Salvar nova senha</button>
+            <label>E-mail</label>
+            <input type="email" required class="form-control" ng-model="registro.email" ng-readonly="registro.readOnly" placeholder="Digite o e-mail">
         </div>
 
-      </div><!-- /.box-body -->
-  </div><!-- /.box -->
- </form><!-- /.form -->
- <div class="box box-danger">
-  <div class="box-header with-border">
-    <h3 class="box-title">Cuidado</h3>
-  </div><!-- /.box-header -->
-  <div class="box-body">
-    <div class="form-group" role="group" aria-label="...">
-      <label> Deseja excluír este usuário? </label>
+        <!-- Status do registro-->
+        <div class="form-group">
+            <label>Status</label>
+            <select class="form-control" ng-model="registro.status" required ng-disabled="registro.readOnly">
+                <option value="ativo">Ativo</option>
+                <option value="inativo">Inativo</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Perfis</label>
+            <select class="form-control select2" ng-disabled="registro.readOnly" ng-model="registro.perfis" multiple="multiple" data-placeholder="Selecione ou mais perfis" style="width: 100%;">
+                <option ng-repeat="item in listaPerfis" value="{{item.id}}">{{item.nome}}</option>
+            </select>
+        </div>
+    </form>
+    <!-- /Dados do usuário -->
+
+
+    <!-- Resetar senha -->
+    <!-- oculta quando é somente visualizar -->
+    <form name="userPasswordForm" ng-hide="registro.readOnly">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title" ng-hide="!novo">Senha de acesso</h3>
+                <h3 class="box-title" ng-hide="novo">Resetar senha</h3>
+
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group">
+                    <label>Senha </label>
+                    <input type="password" autocomplete="off" name="password" ng-minlength="6" required class="form-control" ng-model="registro.password" ng-readonly="registro.readOnly">
+                </div>
+
+                <div class="form-group">
+                    <label>Confirmação de senha</label>
+                    <input type="password" autocomplete="off" name="password_confirmation" ng-minlength="6" required class="form-control" ng-model="registro.password_confirmation" ng-readonly="registro.readOnly" match="registro.password">
+                </div>
+                <div ng-show="userPasswordForm.$invalid">
+                    <p class="text-danger" ng-show="userPasswordForm.password_confirmation.$error.match">A senha não confere!</p>
+                    <p class="text-danger" ng-show="userPasswordForm.password.$error.minlength">Sua senha deve conter no mínimo 6 caracteres!</p>
+                </div>
+
+                <div class="form-group" ng-hide="novo">
+                    <button ng-disabled="xhr || userPasswordForm.$invalid" type="button" class="btn btn-warning" ng-click="salvarSenha()"> Salvar nova senha</button>
+                </div>
+
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </form>
+    <!-- /.form -->
+    <!-- /Resetar senha -->
+
+
+    <!-- Excluir registro -->
+    <!-- oculta quando é somente visualizar -->
+    <div class="box box-danger" ng-hide="novo || registro.readOnly">
+        <div class="box-header with-border">
+            <h3 class="box-title">Cuidado</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="form-group" role="group" aria-label="...">
+                <label> Deseja excluír este usuário? </label>
+            </div>
+            <div class="btn-group clear" role="group" aria-label="...">
+                <button type="button" class="btn btn-danger" ng-click="excluir()" ng-disabled="registro.readOnly">Excluir usuário</button>
+            </div>
+        </div>
+        <!-- /.box-body -->
     </div>
-    <div class="btn-group clear" role="group" aria-label="...">
-      <button type="button" class="btn btn-danger" ng-click="excluir()"  ng-disabled="registro.readOnly">Excluir usuário</button>
-    </div>
-  </div><!-- /.box-body -->
- </div><!-- /.box -->
-</div><!-- /.modal-body -->
+    <!-- /.box -->
+    <!-- /Excluir registro -->
+
+</div>
+<!-- /.modal-body -->
+
+
 <div class="modal-footer text-right">
-  <button ng-disabled="xhr || registro.readOnly" type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
-  <button type="button" class="btn btn-default" ng-click="fechar()"  >Fechar</button>
+    <!-- Salvar novo registro -->
+    <button ng-show="novo" ng-disabled="xhr || usuarioForm.$invalid || userPasswordForm.$invalid" type="button" class="btn btn-success" ng-click="salvarNovo()">Salvar registro</button>
+
+    <!-- Salvar alterações -->
+    <button ng-hide="novo || registro.readOnly" ng-disabled="xhr || registro.readOnly || usuarioForm.$invalid" type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
+
+    <!-- Fechar modal sem salvar -->
+    <button type="button" class="btn btn-default" ng-click="fechar()">Fechar</button>
 </div>

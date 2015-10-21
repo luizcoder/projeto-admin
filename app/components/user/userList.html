@@ -21,6 +21,12 @@
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-10 col-xs-12">
+                            <div class="btn bg-olive btn-sm btn-flat" ng-click="novo()"> <i class="fa fa-plus"></i> Novo usuário</div>
+                        </div>
+                    </div>
+                    </br>
                     <!-- Ações da tabela -->
                     <div class="row">
                         <div class="col-sm-6 col-xs-12">
@@ -47,28 +53,30 @@
                         </div>
                     </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-hover" ng-init="getUsers()">
+                    <div id="no-more-tables">
+                        <table class="table table-bordered table-striped" ng-init="getUsers()">
                             <thead>
                                 <tr>
                                     <th>id</th>
+                                    <th>Status</th>
+                                    <th>Username</th>
                                     <th>Nome</th>
                                     <th>Email</th>
-                                    <th>Criado</th>
-                                    <th>Atualizado</th>
+                                    <th>Atualizado em</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="registro in table.data" ng-hide="registro.excluido">
+                                <tr ng-repeat="registro in table.data" ng-class="{danger:registro.status == 'inativo'}">
 
-                                    <td>{{registro.id}}</td>
-                                    <td>{{registro.name}}</td>
-                                    <td>{{registro.email}}</td>
-                                    <td>{{registro.created_at}}</td>
-                                    <td>{{registro.updated_at}}</td>
+                                    <td data-title="id">{{registro.id}}</td>
+                                    <td data-title="Status">{{registro.status}}</td>
+                                    <td data-title="Username">{{registro.username}}</td>
+                                    <td data-title="Nome">{{registro.name}}</td>
+                                    <td data-title="Email">{{registro.email}}</td>
+                                    <td data-title="Atualizado em">{{registro.updated_at}}</td>
                                     <td class="text-center">
-                                            <div class="btn bg-olive btn-flat btn-xs" ng-click="acoes(registro)">Ações</div>
+                                        <div class="btn bg-olive btn-flat btn-xs" ng-click="acoes(registro)">Ações</div>
                                         <!--<i class="pointer btn-icon fa fa-plus-square-o" ng-click="acoes(registro)"></i> -->
                                     </td>
                                 </tr>
