@@ -3,23 +3,12 @@
   <a href="../../index2.html"><b>Admin</b>LTE</a>
 </div><!-- /.login-logo -->
 <div class="login-box-body">
-    <!-- Global error -->
-    <div class="alert alert-warning" ng-if="auth.loginError">
-        <strong>Erro ao tentar realizar login</strong>
-        </br>Usuário e/ou senha digitados são invalidos! Tente novamente.
-    </div>
-
-    <!-- Global warning -->
-    <div class="alert alert-warning" ng-if="warningText">
-        {{warningText}}
-    </div>
-
 
   <p class="login-box-msg">Realize login para iniciar sua sessão</p>
   <form method="post" ng-keydown="$event.which === 13 && auth.login()">
     <div class="form-group has-feedback">
-      <input name="email" type="email" ng-model="auth.email" class="form-control" placeholder="Email">
-      <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+      <input name="username" type="text" ng-model="auth.username" class="form-control" placeholder="Nome de usuário">
+      <span class="glyphicon glyphicon-user form-control-feedback"></span>
     </div>
     <div class="form-group has-feedback">
       <input name="password" type="password" ng-model="auth.password"  class="form-control" placeholder="Password">

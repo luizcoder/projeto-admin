@@ -29,6 +29,13 @@
 }
 
 
+/*
+ * Alteração dos valores padrões o iCheck
+ */
+ .icheckbox_square-blue, .iradio_square-blue {
+    width: 23px;
+}
+
 
 /*
  * Formatações compartilhadas

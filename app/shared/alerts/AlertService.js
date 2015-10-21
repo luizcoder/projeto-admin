@@ -40,6 +40,19 @@
                     toastr.error(error);
                 }
             },
+            // Pode receber string ou array
+            warning: function(msg){
+                // Tratando erros do Laravel Validator
+                if(typeof msg === 'string'){
+                    toastr.warning(msg);
+                }else{
+                    error = "";
+                    angular.forEach(msg, function(value, key){
+                            error += value + "\n";
+                    });
+                    toastr.warning(error);
+                }
+            },
             confirmRemove: function(title,msg){
                 return dialogs.confirm(title,msg).result;
             }
