@@ -72,10 +72,10 @@
                     <label>Confirmação de senha</label>
                     <input type="password" autocomplete="off" name="password_confirmation" ng-minlength="6" required class="form-control" ng-model="registro.password_confirmation" ng-readonly="registro.readOnly" match="registro.password">
                 </div>
-                <div ng-show="userPasswordForm.$invalid">
+                <small ng-show="userPasswordForm.$invalid">
                     <p class="text-danger" ng-show="userPasswordForm.password_confirmation.$error.match">A senha não confere!</p>
                     <p class="text-danger" ng-show="userPasswordForm.password.$error.minlength">Sua senha deve conter no mínimo 6 caracteres!</p>
-                </div>
+                </small>
 
                 <div class="form-group" ng-hide="novo">
                     <button ng-disabled="xhr || userPasswordForm.$invalid" type="button" class="btn btn-warning" ng-click="salvarSenha()"> Salvar nova senha</button>

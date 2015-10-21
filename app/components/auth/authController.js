@@ -4,6 +4,13 @@
         var apiUrl = $rootScope.apiUrl;
         var ctrl = this;
 
+        if($state.params.token){
+            ctrl.token = $state.params.token;
+        }
+
+        if($state.params.email){
+            ctrl.email = $state.params.email;
+        }
         ctrl.login = function(){
 
             // Armazenando as credenciais do usuário para login
@@ -87,6 +94,49 @@
              $state.go('login', {});
 
          });
+        }
+
+        // Enviar link de recuperação de senha para o e-mail
+        ctrl.linkEnviado = false;
+        ctrl.enviarLink = function(){
+
+            var url = $state.href('reset-password', {token:'token',email:'email'}, {absolute: true});
+            $http.post($rootScope.apiUrl+'/api/password/email', {email: ctrl.email, callBackUrl: url}).success(function(data){
+                if(data.result){
+                    ctrl.linkEnviado = true;
+                }else{
+                    AlertService.error("Erro ao enviar e-mail!");
+                }
+
+            }).error(function(error){
+                AlertService.error(error);
+            });
+
+        }
+
+        // Enviar o token e nova senha
+        ctrl.passwordReseted = false;
+        ctrl.resetPassword = function(){
+            var data = {
+                email:ctrl.email,
+                password: ctrl.password,
+                password_confirmation: ctrl.password_confirmation,
+                token:ctrl.token
+            }
+
+            $http.post($rootScope.apiUrl+'/api/password/reset', data ).success(function(data){
+                if(data.result){
+                    ctrl.passwordReseted = true;
+                }else{
+                    AlertService.error("Erro ao salvar senha!");
+                }
+
+            }).error(function(error){
+
+                AlertService.error(error);
+
+            });
+
         }
 
     }]);
