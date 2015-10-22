@@ -16,31 +16,24 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
-                <div class="col-xs-8">
-                    <div class="checkbox icheck">
-                        <label>
-                            <input type="checkbox"> Manter logado
-                        </label>
-                    </div>
-                </div>
                 <!-- /.col -->
+                <div class="col-xs-8">
+                    <a href="#" ui-sref="esqueci-minha-senha">Esqueci minha senha</a>
+                </div>
                 <div class="col-xs-4">
                     <button ng-click="auth.login()" ng-disabled="loginForm.$invalid" type="button" class="btn btn-primary btn-block btn-flat">Entrar</button>
                 </div>
                 <!-- /.col -->
             </div>
         </form>
-
+        <!-- todo: implementar
         <div class="social-auth-links text-center">
             <p>- OU -</p>
             <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Realizar login com Facebook</a>
             <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Realizar login com Google+</a>
         </div>
-        <!-- /.social-auth-links -->
-
-        <a href="#" ui-sref="esqueci-minha-senha">Esqueci minha senha</a>
-        <br>
-        <a href="register.html" class="text-center">Criar um conta</a>
+        <!-- /.social-auth-links - ->
+        -->
 
     </div>
     <!-- /.login-box-body -->
