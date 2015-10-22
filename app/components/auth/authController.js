@@ -67,7 +67,7 @@
                 }else{
 
                    //Redirecionando usuário para a pagina principal
-                    $state.go('admin.users', {});
+                    $state.go('admin.home', {});
 
                 }
 

@@ -8,11 +8,6 @@
     var app = angular.module('app',['menu','ui.router','auth','user','satellizer','ui.bootstrap','angular-loading-bar','dialogs.main','validation.match']);
     app.controller('AppController',['$rootScope',function($rootScope){
 
-        // Metodo para avaliar se o link está ativo
-        $rootScope.isActive = function(route){
-            return $rootScope.currentStateName === route;
-        }
-
         // Escuta de evento do loadingBar
         $rootScope.$on('cfpLoadingBar:started',function(){
             $rootScope.xhr = true;
@@ -129,7 +124,7 @@
                 // redirecionar para a rota principal.
                 if(toState.name === 'login'){
                     event.preventDefault();
-                    $state.go('admin.users', {});
+                    $state.go('admin.home', {});
                 }
             }
         });

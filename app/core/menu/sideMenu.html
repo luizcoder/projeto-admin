@@ -6,19 +6,19 @@
     <li class="header">MENU PRINCIPAL</li>
 
     <!-- Optionally, you can add icons to the links -->
-    <li ng-class="{'active':isActive('admin.home')}">
+    <li ui-sref-active="active">
         <a ui-sref="admin.home"><i class="fa fa-link"></i> <span>Inicio</span></a>
     </li>
 
-    <li class="treeview">
+    <li class="treeview" ui-sref-active="active">
       <a href="javascript:;">
-          <i class="fa fa-wrench"></i> 
-          <span>Administrador</span> 
+          <i class="fa fa-wrench"></i>
+          <span>Administrador</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
       <ul class="treeview-menu">
-        <li ng-class="{'active':isActive('admin.users')}"><a href="javascript:;" ui-sref="admin.users"><i class="fa fa-table"></i>Usuários</a></li>
-        <li ng-class="{'active':isActive('admin.users')}"><a href="javascript:;"><i class="fa fa-table"></i>Perfis</a></li>
+        <li ui-sref-active="active"><a href="javascript:;" ui-sref="admin.administrador.users"><i class="fa fa-table"></i>Usuários</a></li>
+        <li ui-sref-active="active"><a href="javascript:;" ui-sref="admin.perfis"><i class="fa fa-table"></i>Perfis</a></li>
       </ul>
     </li>
   </ul><!-- /.sidebar-menu -->

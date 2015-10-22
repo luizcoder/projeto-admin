@@ -1,41 +1,48 @@
 <div class="login-box">
-<div class="login-logo">
-  <a href="../../index2.html"><b>Admin</b>LTE</a>
-</div><!-- /.login-logo -->
-<div class="login-box-body">
+    <div class="login-logo">
+        <a href="../../index2.html"><b>Admin</b>LTE</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
 
-  <p class="login-box-msg">Realize login para iniciar sua sessão</p>
-  <form name="loginForm" ng-keydown="$event.which === 13 && auth.login()">
-    <div class="form-group has-feedback">
-      <input name="username" required type="text" ng-minlength="4" ng-model="auth.username" class="form-control" placeholder="Nome de usuário">
-      <span class="glyphicon glyphicon-user form-control-feedback"></span>
-    </div>
-    <div class="form-group has-feedback">
-      <input name="password" required type="password" ng-minlength="6" ng-model="auth.password"  class="form-control" placeholder="Password">
-      <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-    </div>
-    <div class="row">
-      <div class="col-xs-8">
-        <div class="checkbox icheck">
-          <label>
-            <input type="checkbox"> Manter logado
-          </label>
+        <p class="login-box-msg">Realize login para iniciar sua sessão</p>
+        <form name="loginForm" ng-keydown="$event.which === 13 && auth.login()">
+            <div class="form-group has-feedback">
+                <input name="username" required type="text" ng-minlength="4" ng-model="auth.username" class="form-control" placeholder="Nome de usuário">
+                <span class="glyphicon glyphicon-user form-control-feedback"></span>
+            </div>
+            <div class="form-group has-feedback">
+                <input name="password" required type="password" ng-minlength="6" ng-model="auth.password" class="form-control" placeholder="Password">
+                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="checkbox icheck">
+                        <label>
+                            <input type="checkbox"> Manter logado
+                        </label>
+                    </div>
+                </div>
+                <!-- /.col -->
+                <div class="col-xs-4">
+                    <button ng-click="auth.login()" ng-disabled="loginForm.$invalid" type="button" class="btn btn-primary btn-block btn-flat">Entrar</button>
+                </div>
+                <!-- /.col -->
+            </div>
+        </form>
+
+        <div class="social-auth-links text-center">
+            <p>- OU -</p>
+            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Realizar login com Facebook</a>
+            <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Realizar login com Google+</a>
         </div>
-      </div><!-- /.col -->
-      <div class="col-xs-4">
-        <button ng-click="auth.login()" ng-disabled="loginForm.$invalid" type="button" class="btn btn-primary btn-block btn-flat">Entrar</button>
-      </div><!-- /.col -->
+        <!-- /.social-auth-links -->
+
+        <a href="#" ui-sref="esqueci-minha-senha">Esqueci minha senha</a>
+        <br>
+        <a href="register.html" class="text-center">Criar um conta</a>
+
     </div>
-  </form>
-
-  <div class="social-auth-links text-center">
-    <p>- OU -</p>
-    <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Realizar login com Facebook</a>
-    <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Realizar login com Google+</a>
-  </div><!-- /.social-auth-links -->
-
-  <a href="#"ui-sref="esqueci-minha-senha">Esqueci minha senha</a><br>
-  <a href="register.html" class="text-center">Criar um conta</a>
-
-</div><!-- /.login-box-body -->
-</div><!-- /.login-box -->
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
