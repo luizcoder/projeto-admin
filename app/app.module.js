@@ -101,12 +101,12 @@
 	}])
 
 
-    app.run(['$rootScope','$state','$modalStack',function($rootScope,$state,$modalStack){
+    app.run(['$rootScope','$state','$uibModalStack',function($rootScope,$state,$uibModalStack){
 
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
 
             // Removendo todos os modais ativos
-            $modalStack.dismissAll();
+            $uibModalStack.dismissAll();
 
             // Armazenando o nome da rota atual
             $rootScope.currentStateName = toState.name;
