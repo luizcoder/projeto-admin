@@ -16,8 +16,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="bower_components/AdminLTE/plugins/datatables/dataTables.bootstrap.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="bower_components/AdminLTE/plugins/iCheck/square/blue.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="bower_components/AdminLTE/plugins/select2/select2.min.css" >
+    <!-- Ui Select -->
+    <link rel="stylesheet" href="bower_components/ui-select/dist/select.min.css" >
     <!-- Font Awesome -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -70,7 +70,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   -->
   <body class="hold-transition" ng-controller="AppController"
         ng-class="{'login-page': !authenticated, 'skin-blue sidebar-mini': authenticated}">
-    <div class="wrapper" ui-view></div>
+    <div ng-controller="AclController" class="wrapper" ui-view></div>
 
     <!-- REQUIRED JS SCRIPTS -->
 
@@ -80,9 +80,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="bower_components/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
     <!-- iCheck -->
     <script src="bower_components/AdminLTE/plugins/iCheck/icheck.min.js"></script>
-    <!-- Select2 -->
-    <script src="bower_components/AdminLTE/plugins/select2/select2.full.min.js"></script>
-
     <!-- Angular Js -->
     <script src="bower_components/angular/angular.min.js"></script>
 
@@ -100,6 +97,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-dialog-service/dist/dialogs.min.js"></script>
     <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
+    <script src="bower_components/ui-select/dist/select.min.js"></script>
 
     <script src="app/template.js"></script>
 
@@ -115,6 +113,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- App modules -->
     <script src="app/components/auth/authController.js"></script>
+    <script src="app/components/auth/aclController.js"></script>
     <script src="app/components/user/userController.js"></script>
 
     <!-- App services -->

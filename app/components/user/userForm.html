@@ -37,16 +37,23 @@
         <!-- Status do registro-->
         <div class="form-group">
             <label>Status</label>
-            <select class="form-control" ng-model="registro.status" required ng-disabled="registro.readOnly">
-                <option value="ativo">Ativo</option>
-                <option value="inativo">Inativo</option>
-            </select>
+            <ui-select  required  ng-model="registro.status" theme="bootstrap" ng-disabled="registro.readOnly">
+                <ui-select-match placeholder="Selecione um status...">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="item.id as item in status | filter: $select.search">
+                  <div ng-bind-html="item.name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
         </div>
+
+        <!-- Grupos do registro-->
         <div class="form-group">
-            <label>Perfis</label>
-            <select class="form-control select2" ng-disabled="registro.readOnly" ng-model="registro.perfis" multiple="multiple" data-placeholder="Selecione ou mais perfis" style="width: 100%;">
-                <option ng-repeat="item in listaPerfis" value="{{item.id}}">{{item.nome}}</option>
-            </select>
+            <label>Grupos</label>
+            <ui-select multiple ng-model="registro.groups" theme="bootstrap" ng-disabled="registro.readOnly">
+                <ui-select-match placeholder="Selecione um grupo...">{{$item.display_name}}</ui-select-match>
+                <ui-select-choices repeat="item as item in groups | filter: $select.search">
+                  <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
         </div>
     </form>
     <!-- /Dados do usuário -->
@@ -54,7 +61,7 @@
 
     <!-- Resetar senha -->
     <!-- oculta quando é somente visualizar -->
-    <form name="userPasswordForm" ng-hide="registro.readOnly">
+    <form name="userPasswordForm" ng-hide="registro.readOnly || !hasRule('alterar.senha.usuario')">
         <div class="box box-warning">
             <div class="box-header with-border">
                 <h3 class="box-title" ng-hide="!novo">Senha de acesso</h3>
@@ -92,7 +99,7 @@
 
     <!-- Excluir registro -->
     <!-- oculta quando é somente visualizar -->
-    <div class="box box-danger" ng-hide="novo || registro.readOnly">
+    <div class="box box-danger" ng-hide="novo || registro.readOnly || !hasRule('deletar.usuario')">
         <div class="box-header with-border">
             <h3 class="box-title">Cuidado</h3>
         </div>

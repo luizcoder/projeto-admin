@@ -757,8 +757,5 @@ var _initTemplate = function(){
             });
 
     }(jQuery));
-    (function ($) {
-        $('.select2').select2();
-    }(jQuery));
 
 }

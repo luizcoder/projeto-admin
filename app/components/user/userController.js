@@ -123,16 +123,22 @@
 
     app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
 
-        // Lista de perfis
-        $scope.listaPerfis = [
-                {id:1, nome: 'Administrador'},
-                {id:2, nome: 'Consultor'},
-                {id:3, nome: 'Comissão'},
-                {id:4, nome: 'Formando'},
+        // Lista de status
+        $scope.status = [
+            {id:'ativo', name:'Ativo'},
+            {id:'inativo', name:'Inativo'}
         ]
+
+        // Lista de grupos
+        $http.get($rootScope.apiUrl+'/api/group').success(function(data){
+            $scope.groups = data;
+        }).error(function(error){
+            AlertService.error(error);
+        });
 
         // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
+        $scope.registro.groups = $scope.registro.groups;
 
         // Flag de novo registro
         $scope.novo = novo;

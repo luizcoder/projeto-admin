@@ -27,7 +27,8 @@
     "angular-dialog-service": "~5.2.8",
     "angular-sanitize": "~1.4.7",
     "angular-translate": "~2.8.1",
-    "angular-validation-match": "~1.6.0"
+    "angular-validation-match": "~1.6.0",
+    "ui-select": "angular-ui-select#~0.13.2"
   },
   "resolutions": {
     "angular": "1.4.7",

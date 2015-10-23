@@ -5,7 +5,7 @@
      */
     var apiUrl = "http://api.sample";
 
-    var app = angular.module('app',['menu','ui.router','auth','user','satellizer','ui.bootstrap','angular-loading-bar','dialogs.main','validation.match']);
+    var app = angular.module('app',['menu','ui.router','ui.select','auth','user','satellizer','ui.bootstrap','angular-loading-bar','dialogs.main','validation.match']);
     app.controller('AppController',['$rootScope',function($rootScope){
 
         // Escuta de evento do loadingBar
@@ -79,6 +79,7 @@
 		dialogsProvider.useEscClose(false);
 		dialogsProvider.useCopy(false);
 		dialogsProvider.setSize('sm');
+        $translateProvider.useSanitizeValueStrategy(null);
 
 		$translateProvider.translations('pt',{
 			DIALOGS_ERROR: "Error",
