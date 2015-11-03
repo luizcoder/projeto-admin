@@ -1,9 +1,9 @@
 (function(){
-    var app = angular.module('user', []);
+    var app = angular.module('group', []);
 
-    app.controller("UserController", ["$scope","$http",'$rootScope','$uibModal','AlertService', function($scope,$http,$rootScope, $uibModal,AlertService){
+    app.controller("GroupController", ["$scope","$http",'$rootScope','$uibModal','AlertService', function($scope,$http,$rootScope, $uibModal,AlertService){
 
-        $scope.getUsers = function(){
+        $scope.getGroups = function(){
             var data = {page: 1, per_page: 10,search: null};
             if($scope.search){
                 data.search = $scope.search;
@@ -12,15 +12,15 @@
                 data.page = $scope.table.current_page;
                 data.per_page = $scope.per_page;
             }
-            $http.get($rootScope.apiUrl+'/api/user', {params: data}).success(function(data){
+            $http.get($rootScope.apiUrl+'/api/group', {params: data}).success(function(data){
                 $scope.table = data;
             }).error(function(error){
                 AlertService.error(error);
             });
         }
 
-        $scope.$on('get:users', function(){
-            $scope.getUsers();
+        $scope.$on('get:groups', function(){
+            $scope.getGroups();
         });
 
         /**
@@ -29,24 +29,24 @@
         $scope.proxima = function(){
             if($scope.table.current_page + 1 <= $scope.table.last_page){
                 $scope.table.current_page += 1;
-                $scope.getUsers();
+                $scope.getGroups();
             }
         }
 
         $scope.anterior = function(){
             if($scope.table.current_page - 1 > 1 ){
                 $scope.table.current_page -= 1;
-                $scope.getUsers();
+                $scope.getGroups();
             }
         }
 
         $scope.pagina = function(page){
             $scope.table.current_page = page;
-            $scope.getUsers();
+            $scope.getGroups();
         }
 
         $scope.doSearch = function(){
-            $scope.getUsers();
+            $scope.getGroups();
         }
 
         /**
@@ -55,8 +55,8 @@
         $scope.acoes = function (registro) {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/components/user/userAction.html',
-                controller:"UserActionModalController",
+                templateUrl: 'app/components/group/groupAction.html',
+                controller:"GroupActionModalController",
                 windowTopClass:"modal-action",
                 size: 'sm',
                 resolve: {
@@ -70,8 +70,8 @@
         $scope.novo = function () {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/components/user/userForm.html',
-                controller:"UserModalController",
+                templateUrl: 'app/components/group/groupForm.html',
+                controller:"GroupModalController",
                 resolve: {
                     registro: function () {
                         return {};
@@ -85,7 +85,7 @@
 
     }]);
 
-    app.controller('UserActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
+    app.controller('GroupActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
 
         $scope.visualizar = function(){
             registro.readOnly = true;
@@ -105,8 +105,8 @@
             $modalInstance.dismiss('cancel');
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/components/user/userForm.html',
-                controller:"UserModalController",
+                templateUrl: 'app/components/group/groupForm.html',
+                controller:"GroupModalController",
                 resolve: {
                     registro: function () {
                         return registro;
@@ -121,22 +121,8 @@
     }]);
 
 
-    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
+    app.controller('GroupModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
 
-        // Lista de status
-        $scope.status_list = [
-            {id:'ativo', name:'Ativo'},
-            {id:'inativo', name:'Inativo'}
-        ]
-
-        $scope.groups = []
-
-        // Lista de grupos
-        $http.get($rootScope.apiUrl+'/api/user/group').success(function(data){
-            $scope.groups = data;
-        }).error(function(error){
-            AlertService.error(error);
-        });
 
         // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
@@ -144,9 +130,6 @@
 
         // Flag de novo registro
         $scope.novo = novo;
-        if($scope.novo){
-            $scope.registro = {username:''}
-        }
 
         $scope.fechar = function(){
             $modalInstance.dismiss('cancel');
@@ -154,21 +137,21 @@
 
         $scope.excluir = function(){
 
-            confirm = AlertService.confirmRemove('Excluír','Deseja excluír este usuário?');
+            confirm = AlertService.confirmRemove('Excluír','Deseja excluír este grupo?');
             confirm.then(function(op){
 
                 var data = $scope.registro;
                 $scope.formXhr = true;
 
                 // Enviar requisição de exclusão
-                $http.delete($rootScope.apiUrl+'/api/user/' + data.id).success(function(data){
+                $http.delete($rootScope.apiUrl+'/api/group/' + data.id).success(function(data){
 
                     if(data.deleted){
-                        $rootScope.$broadcast('get:users');
-                        AlertService.success('Usuário removido com sucesso!');
+                        $rootScope.$broadcast('get:groups');
+                        AlertService.success('Grupo removido com sucesso!');
                         $modalInstance.dismiss('cancel');
                     }else{
-                        AlertService.error('Erro ao remover usuário!');
+                        AlertService.error('Erro ao remover grupo!');
                     }
                     $scope.formXhr = false;
 
@@ -187,11 +170,11 @@
             $scope.formXhr = true;
 
             // Enviar requisição de alteração
-            $http.put($rootScope.apiUrl+'/api/user/' + data.id, data).success(function(data){
+            $http.put($rootScope.apiUrl+'/api/group/' + data.id, data).success(function(data){
 
                 if(data.updated){
                     // Retornar o registro após a alteração
-                    $scope.registro = data.user;
+                    $scope.registro = data.group;
 
                     // Atualizar o registro na lista
                     for(var key in $scope.registro) {
@@ -199,7 +182,7 @@
                     }
 
                     $scope.formXhr = false;
-                    AlertService.success('Usuário alterado com sucesso!');
+                    AlertService.success('Grupo alterado com sucesso!');
                     $modalInstance.dismiss('cancel');
                 }else{
                     AlertService.error(data.errors);
@@ -218,11 +201,11 @@
             $scope.formXhr = true;
 
             // Enviar requisição de alteração
-            $http.post($rootScope.apiUrl+'/api/user', data).success(function(data){
+            $http.post($rootScope.apiUrl+'/api/group', data).success(function(data){
 
                 if(data.created){
                     // Retornar o registro após a alteração
-                    $scope.registro = data.user;
+                    $scope.registro = data.group;
 
                     // Atualizar o registro na lista
                     for(var key in $scope.registro) {
@@ -230,8 +213,8 @@
                     }
 
                     $scope.formXhr = false;
-                    AlertService.success('Usuário cadastrado com sucesso!');
-                    $rootScope.$broadcast('get:users');
+                    AlertService.success('Grupo cadastrado com sucesso!');
+                    $rootScope.$broadcast('get:groups');
                     $modalInstance.dismiss('cancel');
                 }else{
                     AlertService.error(data.errors);
@@ -243,53 +226,7 @@
                 $scope.formXhr = false;
             });
         }
-        /*
-         * Salvar nova senha
-         */
-        $scope.salvarSenha = function(){
-            var data = $scope.registro;
 
-            // Enviar requisição de alteração
-            $http.post($rootScope.apiUrl+'/api/user/'+data.id+'/password', data).success(function(data){
-
-                if(data.updated){
-                    AlertService.success('Senha alterada com sucesso!');
-                }else{
-                    AlertService.error(data.errors);
-                }
-
-            }).error(function(error){
-                AlertService.error(error);
-            });
-        }
-
-
-        /*
-         * checando se o usuário existe
-         */
-         $scope.wasChecked = false;
-         $scope.checkUnique = function(){
-
-             if($scope.registro.username && $scope.registro.username.length > 3){
-                $scope.usuarioForm.username.$loading = true;
-
-                var data = "";
-                if($scope.novo){
-                    data = $scope.registro.username
-                }else{
-                    data = $scope.registro.username + '/' + $scope.registro.id;
-                }
-                $http.get($rootScope.apiUrl + "/api/user/unique/" + data ).success(function(data) {
-                    $scope.usuarioForm.username.$setValidity('unique', false);
-                    $scope.usuarioForm.username.$loading = false;
-
-                }).error(function(data){
-                    $scope.usuarioForm.username.$setValidity('unique', true);
-                    $scope.usuarioForm.username.$loading = false;
-                });
-                $scope.wasChecked = true;
-            }
-         }
     }]);
 
 })();

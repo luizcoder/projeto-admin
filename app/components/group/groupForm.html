@@ -1,0 +1,54 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="fechar()" aria-label="Fechar"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Grupo</h4>
+</div>
+<div class="modal-body">
+
+    <!-- Dados do usuário -->
+    <form role="form" name="groupForm">
+        <!-- Nome do grupo-->
+        <div class="form-group">
+            <label>Nome </label>
+            <input type="text" name="name" required class="form-control" ng-model="registro.name" ng-readonly="registro.readOnly" placeholder="Digite o nome">
+        </div>
+
+        <!-- Nome para exibição do grupo-->
+        <div class="form-group">
+            <label>Nome para exibição </label>
+            <input type="text" name="display_name" required class="form-control" ng-model="registro.display_name" ng-readonly="registro.readOnly" placeholder="Digite o nome para exibição">
+        </div>
+
+        <!-- Descrição do grupo-->
+        <div class="form-group">
+            <label>Descrição </label>
+            <textarea  class="form-control" ng-model="registro.description" ng-readonly="registro.readOnly" placeholder="Digite aqui a descrição deste grupo"></textarea>
+        </div>
+
+        <!-- Grupos do registro- ->
+        <div class="form-group">
+            <label>Grupos</label>
+            <ui-select multiple ng-model="registro.groups_id" theme="bootstrap" ng-disabled="registro.readOnly">
+                <ui-select-match placeholder="Selecione um grupo...">{{$item.display_name}}</ui-select-match>
+                <ui-select-choices repeat="item.id as item in groups | filter: $select.search">
+                  <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+                </ui-select-choices>
+              </ui-select>
+        </div>-->
+    </form>
+    <!-- /Dados do grupo -->
+
+
+</div>
+<!-- /.modal-body -->
+
+
+<div class="modal-footer text-right">
+    <!-- Salvar novo registro -->
+    <button ng-show="novo" ng-disabled="xhr || groupForm.$invalid" type="button" class="btn btn-success" ng-click="salvarNovo()">Salvar registro</button>
+
+    <!-- Salvar alterações -->
+    <button ng-hide="novo || registro.readOnly" ng-disabled="xhr || registro.readOnly || groupForm.$invalid" type="button" class="btn btn-success" ng-click="salvar()">Salvar Alterações</button>
+
+    <!-- Fechar modal sem salvar -->
+    <button type="button" class="btn btn-default" ng-click="fechar()">Fechar</button>
+</div>

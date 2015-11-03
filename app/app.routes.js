@@ -36,10 +36,15 @@
               url: "/administrador",
               template: '<ui-view/>'
            })
-            .state('admin.administrador.users', {
+           .state('admin.administrador.users', {
                 url: "/users",
                 templateUrl: "app/components/user/userList.html",
                 controller: 'UserController as _user'
-            });
+           })
+           .state('admin.administrador.groups', {
+                url: "/groups",
+                templateUrl: "app/components/group/groupList.html",
+                controller: 'GroupController as _group'
+           });
     }]);
 })();

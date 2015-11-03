@@ -1,0 +1,96 @@
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+    Grupos
+    <small>Listagem e cadastro de grupos</small>
+  </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Administrador </a></li>
+        <li class="active">Grupo</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Lista</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-sm-10 col-xs-12">
+                            <button class="btn bg-olive btn-sm btn-flat" ng-click="novo()" ng-disabled="!hasRule('cadastrar.grupo')"> <i class="fa fa-plus"></i> Novo grupo</button>
+                        </div>
+                    </div>
+                    </br>
+                    <!-- Ações da tabela -->
+                    <div class="row">
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="dataTables_length">
+                                <label>
+                                    Exibir
+                                    <select ng-change="pagina(1)" class="form-control input-sm" ng-model="per_page">
+                                        <option ng-selected="10">10</option>
+                                        <option>25</option>
+                                        <option>100</option>
+                                        <option>450</option>
+                                    </select>
+                                    registros
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-xs-12">
+                            <div class="dataTables_filter">
+                                <label>
+                                    Buscar:
+                                    <input ng-keydown="$event.which === 13 && doSearch()" ng-model="search" class="form-control input-sm" placeholder="" t ype="search">
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="no-more-tables">
+                        <table class="table table-bordered table-striped" ng-init="getGroups()">
+                            <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Nome</th>
+                                    <th>Nome (exibição)</th>
+                                    <th>Cadastrado em</th>
+                                    <th>Atualizado em</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="registro in table.data">
+
+                                    <td data-title="id">{{registro.id}}</td>
+                                    <td data-title="Nome">{{registro.name}}</td>
+                                    <td data-title="Nome (exibição)">{{registro.display_name}}</td>
+                                    <td data-title="Cadastrado em">{{registro.created_at}}</td>
+                                    <td data-title="Atualizado em">{{registro.updated_at}}</td>
+                                    <td class="text-center">
+                                        <div class="btn bg-olive btn-flat btn-xs" ng-click="acoes(registro)">Ações</div>
+                                        <!--<i class="pointer btn-icon fa fa-plus-square-o" ng-click="acoes(registro)"></i> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.table-responsive -->
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- diretiva de paginação -->
+    <app-pagination></app-pagination>
+</section>
+<!-- /.content -->
