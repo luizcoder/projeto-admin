@@ -37,20 +37,17 @@
         <!-- Status do registro-->
         <div class="form-group">
             <label>Status</label>
-            <ui-select  required  ng-model="registro.status" theme="bootstrap" ng-disabled="registro.readOnly">
-                <ui-select-match placeholder="Selecione um status...">{{$select.selected.name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in status | filter: $select.search">
-                  <div ng-bind-html="item.name | highlight: $select.search"></div>
-                </ui-select-choices>
-              </ui-select>
+            <select required  ng-model="registro.status" class="form-control" ng-disabled="registro.readOnly">
+                <option ng-repeat="status in status_list" value="{{status.id}}">{{status.name}}</option>
+            </select>
         </div>
 
         <!-- Grupos do registro-->
         <div class="form-group">
             <label>Grupos</label>
-            <ui-select multiple ng-model="registro.groups" theme="bootstrap" ng-disabled="registro.readOnly">
+            <ui-select multiple ng-model="registro.groups_id" theme="bootstrap" ng-disabled="registro.readOnly">
                 <ui-select-match placeholder="Selecione um grupo...">{{$item.display_name}}</ui-select-match>
-                <ui-select-choices repeat="item as item in groups | filter: $select.search">
+                <ui-select-choices repeat="item.id as item in groups | filter: $select.search">
                   <div ng-bind-html="item.display_name | highlight: $select.search"></div>
                 </ui-select-choices>
               </ui-select>

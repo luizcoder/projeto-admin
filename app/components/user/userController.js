@@ -124,11 +124,13 @@
     app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
 
         // Lista de status
-        $scope.status = [
+        $scope.status_list = [
             {id:'ativo', name:'Ativo'},
             {id:'inativo', name:'Inativo'}
         ]
 
+        $scope.groups = []
+        
         // Lista de grupos
         $http.get($rootScope.apiUrl+'/api/group').success(function(data){
             $scope.groups = data;
