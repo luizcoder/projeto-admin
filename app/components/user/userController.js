@@ -248,7 +248,7 @@
             var data = $scope.registro;
 
             // Enviar requisição de alteração
-            $http.post($rootScope.apiUrl+'/api/user/password/' + data.id, data).success(function(data){
+            $http.post($rootScope.apiUrl+'/api/user/'+data.id+'/password', data).success(function(data){
 
                 if(data.updated){
                     AlertService.success('Senha alterada com sucesso!');
@@ -277,7 +277,7 @@
                 }else{
                     data = $scope.registro.username + '/' + $scope.registro.id;
                 }
-                $http.get($rootScope.apiUrl + "/api/user/checkUnique/" + data ).success(function(data) {
+                $http.get($rootScope.apiUrl + "/api/user/unique/" + data ).success(function(data) {
                     $scope.usuarioForm.username.$setValidity('unique', false);
                     $scope.usuarioForm.username.$loading = false;
 
