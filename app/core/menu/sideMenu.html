@@ -6,19 +6,19 @@
     <li class="header">MENU PRINCIPAL</li>
 
     <!-- Optionally, you can add icons to the links -->
-    <li ui-sref-active="active">
-        <a ui-sref="admin.home"><i class="fa fa-link"></i> <span>Inicio</span></a>
+    <li>
+        <a is-active ui-sref="admin.home"><i class="fa fa-link"></i> <span>Inicio</span></a>
     </li>
 
-    <li class="treeview" ui-sref-active="active">
-      <a href="javascript:;">
+    <li class="treeview">
+      <a href="javascript:;" is-active="administrador">
           <i class="fa fa-wrench"></i>
           <span>Administrador</span>
           <i class="fa fa-angle-left pull-right"></i>
         </a>
       <ul class="treeview-menu">
-        <li ui-sref-active="active"><a href="javascript:;" ui-sref="admin.administrador.users"><i class="fa fa-table"></i>Usuários</a></li>
-        <li ui-sref-active="active"><a href="javascript:;" ui-sref="admin.administrador.groups"><i class="fa fa-table"></i>Grupos de Acesso</a></li>
+        <li><a is-active href="javascript:;" ui-sref="admin.administrador.users"><i class="fa fa-table"></i>Usuários</a></li>
+        <li><a is-active href="javascript:;" ui-sref="admin.administrador.groups"><i class="fa fa-table"></i>Grupos de Acesso</a></li>
       </ul>
     </li>
   </ul><!-- /.sidebar-menu -->
