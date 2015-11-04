@@ -23,6 +23,15 @@
             $scope.getUsers();
         });
 
+
+        // Obtendo lista de grupos disponíveis
+        $http.get($rootScope.apiUrl+'/api/user/group').success(function(data){
+            $scope.groups = data;
+        }).error(function(error){
+            AlertService.error(error);
+        });
+
+
         /**
          * Controles de paginação
          */
@@ -63,6 +72,9 @@
                     registro: function(){
                         return registro;
                         },
+                    groups: function(){
+                        return $scope.groups;
+                    }
                 }
             });
         }
@@ -78,6 +90,9 @@
                     },
                     novo: function(){
                         return true;
+                    },
+                    groups: function(){
+                        return $scope.groups;
                     }
                 }
             });
@@ -85,7 +100,7 @@
 
     }]);
 
-    app.controller('UserActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
+    app.controller('UserActionModalController', ['$modalInstance','$scope','registro','groups','$uibModal', function($modalInstance,$scope,registro,groups,$uibModal){
 
         $scope.visualizar = function(){
             registro.readOnly = true;
@@ -113,6 +128,9 @@
                     },
                     novo: function(){
                         return false;
+                    },
+                    groups: function(){
+                        return groups;
                     }
                 }
             });
@@ -121,7 +139,7 @@
     }]);
 
 
-    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
+    app.controller('UserModalController', ['$modalInstance','$scope', 'registro','novo','groups','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,groups,$rootScope,$http,AlertService){
 
         // Lista de status
         $scope.status_list = [
@@ -129,14 +147,8 @@
             {id:'inativo', name:'Inativo'}
         ]
 
-        $scope.groups = []
+        $scope.groups = groups;
 
-        // Lista de grupos
-        $http.get($rootScope.apiUrl+'/api/user/group').success(function(data){
-            $scope.groups = data;
-        }).error(function(error){
-            AlertService.error(error);
-        });
 
         // Copiar o registro para edição
         $scope.registro = angular.copy(registro);
