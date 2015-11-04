@@ -71,7 +71,7 @@
                         angular.element(element).parent('li').addClass('active');
 
                     // Senão, é feito a leitura do uiSref
-                    }else if( attr.uiSref.length > 0 && attr.uiSref == $state.current.name){
+                    }else if(attr.uiSref == $state.current.name){
                         angular.element(element).parent('li').addClass('active');
 
                     // Caso não seja um link ativo, remove a classe 'active'
