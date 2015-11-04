@@ -1,6 +1,6 @@
 (function(){
     var app = angular.module('menu');
-    
+
     app.directive('icheck',function(){
         return {
             restrict: 'C',
@@ -13,7 +13,7 @@
             },
         }
     });
-    
+
     app.directive('mainHeader',function(){
         return {
             restrict: 'C',
@@ -23,29 +23,29 @@
             },
         }
     });
-    
+
     app.directive('mainSidebar',function(){
         return {
             restrict: 'C',
             templateUrl: "app/core/menu/sideMenu.html"
         }
-    });    
-    
+    });
+
     app.directive('controlSidebar',function(){
         return {
             restrict: 'C',
             templateUrl: "app/core/menu/sideMenu2.html"
         }
-    }); 
+    });
 
     app.directive('mainFooter',function(){
         return {
             restrict: 'C',
-            templateUrl: "app/core/footer/footer.html"   
+            templateUrl: "app/core/footer/footer.html"
         }
-    }); 
-    
-    
+    });
+
+
     app.directive('login-box-body',function(){
         return {
             restrict: 'C',
@@ -53,6 +53,6 @@
                 _initTemplate();
             }
         }
-    });    
+    });
 
 })();
