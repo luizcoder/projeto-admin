@@ -37,6 +37,12 @@
                     var $rootScope = $injector.get('$rootScope');
                     var AlertService = $injector.get('AlertService');
 
+
+                    if(rejection.status == -1){
+                        AlertService.error("Não há conexão com a internet! Tente novamente!");
+                        return $q.reject(rejection);
+                    }
+
                     // Instead of checking for a status code of 400 which might be used
                     // for other reasons in Laravel, we check for the specific rejection
                     // reasons to tell us if we need to redirect to the login state

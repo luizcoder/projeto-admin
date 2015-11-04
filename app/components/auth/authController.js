@@ -105,7 +105,7 @@
                 if(data.result){
                     ctrl.linkEnviado = true;
                 }else{
-                    AlertService.error("Erro ao enviar e-mail!");
+                    AlertService.error("Erro ao enviar e-mail! Por favor, tente novamente!");
                 }
 
             }).error(function(error){

@@ -14,8 +14,6 @@
             }
             $http.get($rootScope.apiUrl+'/api/user', {params: data}).success(function(data){
                 $scope.table = data;
-            }).error(function(error){
-                AlertService.error(error);
             });
         }
 
@@ -27,8 +25,6 @@
         // Obtendo lista de grupos disponíveis
         $http.get($rootScope.apiUrl+'/api/user/group').success(function(data){
             $scope.groups = data;
-        }).error(function(error){
-            AlertService.error(error);
         });
 
 
