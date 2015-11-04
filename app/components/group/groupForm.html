@@ -24,16 +24,40 @@
             <textarea  class="form-control" ng-model="registro.description" ng-readonly="registro.readOnly" placeholder="Digite aqui a descrição deste grupo"></textarea>
         </div>
 
-        <!-- Grupos do registro- ->
+        <!-- Permissões-->
         <div class="form-group">
-            <label>Grupos</label>
-            <ui-select multiple ng-model="registro.groups_id" theme="bootstrap" ng-disabled="registro.readOnly">
+            <label>Permissões</label>
+            <ui-select multiple required ng-model="registro.rules_id" theme="bootstrap" ng-disabled="registro.readOnly">
                 <ui-select-match placeholder="Selecione um grupo...">{{$item.display_name}}</ui-select-match>
-                <ui-select-choices repeat="item.id as item in groups | filter: $select.search">
+                <ui-select-choices repeat="item.id as item in rules | filter: $select.search">
                   <div ng-bind-html="item.display_name | highlight: $select.search"></div>
+                  <small>{{item.description}}</small>
                 </ui-select-choices>
               </ui-select>
-        </div>-->
+        </div>
+
+
+        <!-- Excluir registro -->
+        <!-- oculta quando é somente visualizar -->
+        <div class="box box-danger" ng-hide="novo || registro.readOnly || !hasRule('deletar.grupo')">
+            <div class="box-header with-border">
+                <h3 class="box-title">Cuidado</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="form-group" role="group" aria-label="...">
+                    <label> Deseja excluír este grupo? </label>
+                </div>
+                <div class="btn-group clear" role="group" aria-label="...">
+                    <button type="button" class="btn btn-danger" ng-click="excluir()" ng-disabled="registro.readOnly">Excluir grupo</button>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+        <!-- /Excluir registro -->
+
+
     </form>
     <!-- /Dados do grupo -->
 

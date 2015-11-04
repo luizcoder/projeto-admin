@@ -23,6 +23,13 @@
             $scope.getGroups();
         });
 
+        $http.get($rootScope.apiUrl+'/api/rule').success(function(data){
+            $scope.rules = data;
+        }).error(function(error){
+            AlertService.error(error);
+        });
+
+
         /**
          * Controles de paginação
          */
@@ -62,7 +69,10 @@
                 resolve: {
                     registro: function(){
                         return registro;
-                        },
+                    },
+                    rules: function(){
+                        return $scope.rules;
+                    }
                 }
             });
         }
@@ -78,6 +88,9 @@
                     },
                     novo: function(){
                         return true;
+                    },
+                    rules: function(){
+                        return $scope.rules;
                     }
                 }
             });
@@ -85,7 +98,7 @@
 
     }]);
 
-    app.controller('GroupActionModalController', ['$modalInstance','$scope','registro','$uibModal', function($modalInstance,$scope,registro,$uibModal){
+    app.controller('GroupActionModalController', ['$modalInstance','$scope','registro','rules','$uibModal', function($modalInstance,$scope,registro,rules,$uibModal){
 
         $scope.visualizar = function(){
             registro.readOnly = true;
@@ -113,6 +126,9 @@
                     },
                     novo: function(){
                         return false;
+                    },
+                    rules: function(){
+                        return rules;
                     }
                 }
             });
@@ -121,7 +137,7 @@
     }]);
 
 
-    app.controller('GroupModalController', ['$modalInstance','$scope', 'registro','novo','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,$rootScope,$http,AlertService){
+    app.controller('GroupModalController', ['$modalInstance','$scope', 'registro','novo','rules','$rootScope','$http','AlertService', function($modalInstance,$scope,registro,novo,rules,$rootScope,$http,AlertService){
 
 
         // Copiar o registro para edição
@@ -130,6 +146,8 @@
 
         // Flag de novo registro
         $scope.novo = novo;
+        // rules
+        $scope.rules = rules;
 
         $scope.fechar = function(){
             $modalInstance.dismiss('cancel');

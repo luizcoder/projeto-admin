@@ -1,19 +1,6 @@
 (function(){
     var app = angular.module('menu');
 
-    app.directive('icheck',function(){
-        return {
-            restrict: 'C',
-            compile: function(tElement, tAttrs, transclude){
-                angular.element('.icheck input').iCheck({
-                  checkboxClass: 'icheckbox_square-blue',
-                  radioClass: 'iradio_square-blue',
-                  increaseArea: '20%' // optional
-                });
-            },
-        }
-    });
-
     app.directive('mainHeader',function(){
         return {
             restrict: 'C',
