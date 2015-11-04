@@ -54,15 +54,6 @@
     background-color: #FFEDED;
 }
 
- /*
- Exibição do rodape
- */
- .main-footer{
-    bottom: 0px;
-    position: absolute;
-    width: 100%;
-}
-
 body{
     background-color: #ecf0f5;
 }
